@@ -68,9 +68,13 @@ async function fetchColors(): Promise<Color[]> {
     url: "unknown",
   });
   const colors = data.data;
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(colors);
+      if (Math.random() > 0.5) {
+        return resolve(colors);
+      }
+
+      reject(new Error("There is an error :o"));
     }, 3000);
   });
 }

@@ -2,16 +2,24 @@ import React, { memo } from "react";
 import * as requests from "./requests";
 
 function Colors() {
-  const { data: colors } = requests.colors.read();
+  const { data: colors, error, status } = requests.colors.read();
 
   return (
-    <ul>
-      {colors.map(({ id, color, name }) => (
-        <li style={{ background: color }} key={id}>
-          {name}
-        </li>
-      ))}
-    </ul>
+    <section>
+      {status === "FAILURE" && (
+        <p style={{ color: "brown" }}>{error?.message}</p>
+      )}
+
+      {status === "SUCCESS" && (
+        <ul>
+          {colors.map(({ id, color, name }) => (
+            <li style={{ background: color }} key={id}>
+              {name}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
 

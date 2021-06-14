@@ -1,6 +1,6 @@
-import React, { useEffect, useState, Suspense } from "react";
-import Posts from "./Posts";
-import Colors from "./Colors";
+import React, { useEffect, useState, Suspense, lazy } from "react";
+const Users = lazy(() => import("./Posts"));
+const Colors = lazy(() => import("./Colors"));
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,8 +11,10 @@ function App() {
   });
 
   const handleClick = () => {
-    setCount((prev) => prev + 1);
-    setIsActive((prev) => !prev);
+    Promise.resolve().then(() => {
+      setCount((prev) => prev + 1);
+      setIsActive((prev) => !prev);
+    });
   };
 
   return (
@@ -24,8 +26,8 @@ function App() {
         Click <span>{count}</span>
       </button>
 
-      <Suspense fallback={<p>Loading posts...</p>}>
-        <Posts />
+      <Suspense fallback={<p>Loading users...</p>}>
+        <Users />
       </Suspense>
 
       <Suspense fallback={<p>Loading colors...</p>}>
