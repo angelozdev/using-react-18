@@ -42,57 +42,35 @@ function wrapPromise<T>(promise: Promise<T>) {
   };
 }
 
-// async function fetchUsers(): Promise<User[]> {
-//   console.log("Fetching users...");
-//   return axios({
-//     method: "GET",
-//     baseURL: "https://reqres.in/api",
-//     url: "users",
-//   }).then(({ data: { data } }) => {
-//     return data;
-//   });
-// }
+async function fetchUsers(): Promise<User[]> {
+  console.log("Fetching users...");
 
-// async function fetchColors(): Promise<Color[]> {
-//   console.log("Fetching colors...");
+  const { data } = await axios({
+    method: "GET",
+    baseURL: "https://reqres.in/api",
+    url: "users",
+  });
 
-//   const { data } = await axios({
-//     method: "GET",
-//     baseURL: "https://reqres.in/api",
-//     url: "unknown",
-//   });
-//   const colors = data.data;
-//   return colors;
-// }
-
-function fetchUsers(): Promise<User[]> {
+  const users = data.data;
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        {
-          avatar: "avatar",
-          email: "user@email.com",
-          first_name: "name",
-          last_name: "Last",
-          id: 1,
-        },
-      ]);
+      resolve(users);
     }, 2000);
   });
 }
 
-function fetchColors(): Promise<Color[]> {
+async function fetchColors(): Promise<Color[]> {
+  console.log("Fetching colors...");
+
+  const { data } = await axios({
+    method: "GET",
+    baseURL: "https://reqres.in/api",
+    url: "unknown",
+  });
+  const colors = data.data;
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        {
-          color: "#eee",
-          id: 1,
-          name: "Gray",
-          pantone_value: "asdasdasdsdfa",
-          year: 2000,
-        },
-      ]);
+      resolve(colors);
     }, 3000);
   });
 }
